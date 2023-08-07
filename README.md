@@ -1,6 +1,7 @@
 # ToDoList
 
-### ToDoList(08.07)
+## ToDoList(08.07)
+
 
 - 전체적인 `view`와 `model`의 틀을 잡았다.
 `List`로 `ToDoStore`에 있는 값을 뽑게 만들었고
