@@ -16,7 +16,7 @@ struct ToDo: Identifiable {
     var dateString: String {
         
         let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd EEEE HH:mm"
+        dateFormatter.dateFormat = "yyyy-MM-dd EEE h:mm a"
         
         return dateFormatter.string(from: date)
     }

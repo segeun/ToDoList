@@ -21,16 +21,17 @@ struct ContentView: View {
     @EnvironmentObject var todoStores: ToDoStore
     @State var tapNumber: Int = 1
     @Binding var isShowingSheet: Bool
+    
 
     var body: some View {
         
         TabView(selection: $tapNumber) {
             
-            HomeView(todoStores: _todoStores).tabItem {
+            HomeView().tabItem {
                 Label("Home", systemImage: "homekit") }
             .tag(1)
             
-            PlusToDoView(todoStores: _todoStores, isShowingSheet: $isShowingSheet).tabItem {
+            ProfileView().tabItem {
                 Label("Profile", systemImage: "person.fill") }
             .tag(2)
         }

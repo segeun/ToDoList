@@ -10,6 +10,8 @@ import Foundation
 
 class ToDoStore: ObservableObject {
     @Published var toDoStore: [ToDo] = []
+    @Published var showAlert = false
+
     
     init() {
         toDoStore = [
@@ -20,15 +22,25 @@ class ToDoStore: ObservableObject {
         ]
     }
     
-    func add(_ toDo: ToDo) {
-        toDoStore.append(toDo)
+    func add(work: String, date: Date) {
+        let newTodo = ToDo(work: work, date: date)
+        
+        toDoStore.append(newTodo)
+//        newWorkText = ""
+//        dueDate = Date()
     }
     
     func removeWork(at offsets: IndexSet) {
         toDoStore.remove(atOffsets: offsets)
     }
     
+//    func dueDateFormatted(_ date: Date) -> String {
+//        let formatter = DateFormatter()
+//        formatter.dateStyle = .long
+//        return formatter.string(from: date)
+//    } // 당장은 없어도 됨 toDo에서 이미 계산속성으로 만듦
     
+
     
     
 }

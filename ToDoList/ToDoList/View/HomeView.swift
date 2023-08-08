@@ -10,8 +10,9 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var todoStores: ToDoStore
-    @State var isShowingSheet: Bool = true
+    @State var isShowingSheet: Bool = false
     
+
     private var isToDoEmpty: Bool {
         return todoStores.toDoStore.isEmpty
     }
@@ -24,22 +25,36 @@ struct HomeView: View {
             VStack {
                 if isToDoEmpty {
                     VStack(alignment: .center) {
-                        Text("비어있음")
+                        Text("일정이 비어있음")
+                            .font(.title)
+                            .padding(.top, 200)
                     }
                 }
             }
 
             List {
+                // 현재는 달력에서 일정을 추가할 때는 현재 시간이 있는데 이 시간을 실시간으로 저장을 못 함
+                // timeinterval?? ㄴㄴ
+                // toDo에서 기본 틀을 이미 정해놨다.
+                
                 ForEach(todoStores.toDoStore) { todoList in
-                    Text("\(todoList.work)")
-                        .font(.title2)
+                    VStack(alignment: .leading) {
+                        Text("\(todoList.work)")
+                            .font(.title)
+                        
+                          //Text("\(todoStores.dueDateFormatted(todoList.date))")
+                          // 밑에 방식이 훨씬 효율적으로 보인다. (toDo 연산프로퍼티 사용)
+                        
+                        Text("\(todoList.dateString)")
+                            .font(.footnote)
+                    }
                 }
                 // onDelete를 사용하려면 List 안에 ForEach문으로 선언해야 사용가능하다.
                 .onDelete { offsets in
                     todoStores.removeWork(at: offsets)
                 }
             }
-                .listStyle(.inset)
+            .listStyle(.automatic)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
