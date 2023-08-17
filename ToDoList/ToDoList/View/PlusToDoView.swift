@@ -36,7 +36,7 @@ struct PlusToDoView: View {
                     if newWorkText.count == 0 {
                         todoStores.showAlert = true
                     } else {
-                        todoStores.add(work: newWorkText, date: dueDate)
+                        todoStores.add(work: newWorkText)
                         isShowingSheet.toggle()
                     }
                     

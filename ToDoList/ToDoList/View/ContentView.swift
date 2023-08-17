@@ -11,7 +11,8 @@
 // 3. 삭제와 체크 버튼(onDelete, ??)
 // 4. 탭뷰를 2개 생성 (홈탭, 프로필탭)
 // 5. 메인뷰에는 ToDoList, toolbar와 sheet 활용으로 할 일 추가
-// 6.
+// ToDoList 8.17
+// 1. Firebase 활용해보는 것 고민
 
 
 import SwiftUI

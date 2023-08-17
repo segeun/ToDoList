@@ -8,17 +8,19 @@
 import Foundation
 
 struct ToDo: Identifiable {
-    var id: UUID = UUID()
+    var id: String = UUID().uuidString
     var work: String
-    var date: Date
+    var date: TimeInterval = Date().timeIntervalSince1970
     
     
     var dateString: String {
         
+        let dateCreatedAt = Date(timeIntervalSince1970: date)
+        
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd EEE h:mm a"
         
-        return dateFormatter.string(from: date)
+        return dateFormatter.string(from: dateCreatedAt)
     }
 }
 

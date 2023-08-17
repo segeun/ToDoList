@@ -14,7 +14,7 @@ struct HomeView: View {
     
 
     private var isToDoEmpty: Bool {
-        return todoStores.toDoStore.isEmpty
+        return todoStores.todoArray.isEmpty
     }
     // toDoStore가 비어있음을 나타내는 계산속성
     // ToDoList가 비어있으면 사용자에게 값이 현재 없음을 알려준다.
@@ -37,7 +37,7 @@ struct HomeView: View {
                 // timeinterval?? ㄴㄴ
                 // toDo에서 기본 틀을 이미 정해놨다.
                 
-                ForEach(todoStores.toDoStore) { todoList in
+                ForEach(todoStores.todoArray) { todoList in
                     VStack(alignment: .leading) {
                         Text("\(todoList.work)")
                             .font(.title)
