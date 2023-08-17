@@ -16,13 +16,14 @@
 
 
 import SwiftUI
+import Firebase
+import FirebaseDatabase
 
 struct ContentView: View {
     
     @EnvironmentObject var todoStores: ToDoStore
     @State var tapNumber: Int = 1
     @Binding var isShowingSheet: Bool
-    
 
     var body: some View {
         
@@ -36,7 +37,6 @@ struct ContentView: View {
                 Label("Profile", systemImage: "person.fill") }
             .tag(2)
         }
-        
     }
 }
 

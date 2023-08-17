@@ -17,7 +17,9 @@ struct ToDo: Identifiable {
         
         let dateCreatedAt = Date(timeIntervalSince1970: date)
         
-        let dateFormatter: DateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_kr")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         dateFormatter.dateFormat = "yyyy-MM-dd EEE h:mm a"
         
         return dateFormatter.string(from: dateCreatedAt)
