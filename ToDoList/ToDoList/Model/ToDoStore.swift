@@ -14,6 +14,7 @@ class ToDoStore: ObservableObject {
     @Published var todoArray: [ToDo] = []
     @Published var showAlert = false
 
+    let databaseRef = Database.database().reference().child("TodoList")
     
 //    init() {
 //        toDoStore = [
@@ -25,8 +26,12 @@ class ToDoStore: ObservableObject {
 //    }
     func fetchData() {
         
+        
+        
         todoArray = []
         
+        
+        // databaseRef.getDocuments 고려
         Firestore.firestore().collection("TodoList").getDocuments { (snapshot, error) in
             if let snapshot {
                 
@@ -37,7 +42,7 @@ class ToDoStore: ObservableObject {
                     
                     let docData: [String: Any] = document.data()
                     let work: String = docData["work"] as? String ?? "(no work)"
-                    let date: TimeInterval = docData["date"] as? Double ?? 0
+                    let date: Double = docData["date"] as? Double ?? 0
                     
                     let todo: ToDo = ToDo(id: id, work: work, date: date)
                     

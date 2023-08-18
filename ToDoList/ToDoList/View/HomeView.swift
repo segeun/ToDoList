@@ -17,6 +17,7 @@ struct HomeView: View {
     @State private var todoList: String = "Hello"
     
     let databaseRef = Database.database().reference().child("TodoList")
+
     
     private var isToDoEmpty: Bool {
         return todoStores.todoArray.isEmpty
