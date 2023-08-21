@@ -1,6 +1,6 @@
 # ToDoList
 
-## ToDoList(08.07)
+## 🐶 ToDoList(08.07)
 
 
 - 전체적인 `view`와 `model`의 틀을 잡았다.
@@ -9,17 +9,17 @@
 `DatePicker`를 사용해 날짜와 시간을 선택할 수 있다.<br/> 
 <br/>`TextField`와 함께 내가 저장하고 싶은 `ToDoList`를 저장할 수 있다.<br/> <br/>
 
-## ToDoList(08.08)
+## 🐱 ToDoList(08.08)
 
 - 일정 `TextField` 입력란에 비어있는 상태로 추가를 선택하면<br/><br/> 
 경고 `Alert`이 뜬다. `dateFormatter` 의 용어를 활용해서 더욱 가시성이 좋게 했다.<br/> <br/>
 
-## ToDoList(08.17)
+## 🐭 ToDoList(08.17)
 
 - Firebase와 연동 시작, Firestore와 연결해서 데이터를 관리한다.<br/> <br/> 
 - 오류 투성이. 분명 똑같이 따라 했는데 프리뷰와 전부 먹통<br/> <br/>
 
-## ToDoList(08.21)
+## 🐻‍❄️ ToDoList(08.21)
 
 - 저번주부터 헤매던 Firebase의 Firestore 연동을 성공했다.
 - 비교적 간단한(?)문제였다.
