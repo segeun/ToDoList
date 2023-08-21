@@ -19,18 +19,18 @@
 	<key>STORAGE_BUCKET</key>
 	<string>todolist-4cc58.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:851176488025:ios:f0dd4ab5b7a0ac8fb08548</string>
-	<key>DATEBASE_URL</key>
+	<key>DATABASE_URL</key>
 	<string>https://todolist-4cc58-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

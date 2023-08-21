@@ -10,7 +10,7 @@ import Foundation
 struct ToDo: Identifiable {
     var id: String = UUID().uuidString
     var work: String
-    var date: TimeInterval = Date().timeIntervalSince1970
+    var date: Double = Date().timeIntervalSince1970
     // var date: Double 로도 가능?
     
     var dateString: String {
@@ -23,6 +23,10 @@ struct ToDo: Identifiable {
         dateFormatter.dateFormat = "yyyy-MM-dd EEE h:mm a"
         
         return dateFormatter.string(from: dateCreatedAt)
+    }
+    
+    var textForSharing: String {
+        return "\(work)\n\(date)"
     }
 }
 

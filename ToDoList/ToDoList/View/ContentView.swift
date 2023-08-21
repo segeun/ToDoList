@@ -16,33 +16,32 @@
 
 
 import SwiftUI
-import Firebase
-import FirebaseDatabase
 
 struct ContentView: View {
     
-    @EnvironmentObject var todoStores: ToDoStore
+//    @EnvironmentObject var todoStores: ToDoStore
     @State var tapNumber: Int = 1
-    @Binding var isShowingSheet: Bool
+//    @Binding var isShowingSheet: Bool
 
     var body: some View {
-        
-        TabView(selection: $tapNumber) {
-            
-            HomeView().tabItem {
-                Label("Home", systemImage: "homekit") }
-            .tag(1)
-            
-            ProfileView().tabItem {
-                Label("Profile", systemImage: "person.fill") }
-            .tag(2)
+        NavigationStack {
+            TabView(selection: $tapNumber) {
+                
+                HomeView().tabItem {
+                    Label("Home", systemImage: "homekit") }
+                .tag(1)
+                
+                ProfileView().tabItem {
+                    Label("Profile", systemImage: "person.fill") }
+                .tag(2)
+            }
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(isShowingSheet: .constant(true))
-            .environmentObject(ToDoStore())
+        ContentView()
+            
     }
 }

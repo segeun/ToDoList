@@ -6,18 +6,14 @@
 //
 
 import SwiftUI
-import Firebase
-import FirebaseFirestore
 
 struct HomeView: View {
     
-    @EnvironmentObject var todoStores: ToDoStore
-    @State var isShowingSheet: Bool = false
+    @StateObject private var todoStores: ToDoStore = ToDoStore()
+    @State private var isShowingSheet: Bool = false
     
-    @State private var todoList: String = "Hello"
+    @State private var todoLists: String = "Hello"
     
-    let databaseRef = Database.database().reference().child("TodoList")
-
     
     private var isToDoEmpty: Bool {
         return todoStores.todoArray.isEmpty
@@ -26,15 +22,12 @@ struct HomeView: View {
     // ToDoList가 비어있으면 사용자에게 값이 현재 없음을 알려준다.
     
     var body: some View {
-        NavigationStack {
-            
-            VStack {
-                if isToDoEmpty {
-                    VStack(alignment: .center) {
-                        Text("일정이 비어있음")
-                            .font(.title)
-                            .padding(.top, 200)
-                    }
+        VStack {
+            if isToDoEmpty {
+                VStack(alignment: .center) {
+                    Text("일정이 비어있음")
+                        .font(.title)
+                        .padding(.top, 200)
                 }
             }
             
@@ -44,20 +37,16 @@ struct HomeView: View {
                 // toDo에서 기본 틀을 이미 정해놨다.
                 
                 ForEach(todoStores.todoArray) { todoList in
-                    VStack(alignment: .leading) {
-                        Text("\(todoList.work)")
-                            .font(.title)
-                        
-                        //Text("\(todoStores.dueDateFormatted(todoList.date))")
-                        // 밑에 방식이 훨씬 효율적으로 보인다. (toDo 연산프로퍼티 사용)
-                        
-                        Text("\(todoList.dateString)")
-                            .font(.footnote)
+                    NavigationLink {
+                        TodoDetailView(todo: todoList)
+                    } label: {
+                        TodoCellView(todo: todoList)
                     }
                 }
-                // onDelete를 사용하려면 List 안에 ForEach문으로 선언해야 사용가능하다.
                 .onDelete { offsets in
                     todoStores.removeWork(at: offsets)
+                    // onDelete를 사용하려면 List 안에 ForEach문으로 선언해야 사용가능하다.
+                    
                 }
             }
             .listStyle(.automatic)
@@ -71,31 +60,31 @@ struct HomeView: View {
                 }
             }
             .sheet(isPresented: $isShowingSheet) {
-                PlusToDoView(isShowingSheet: $isShowingSheet)
+                PlusToDoView(todoStores: todoStores, isShowingSheet: $isShowingSheet)
             }
             .navigationTitle("To Do List")
             .onAppear {
-                observeLightState()
-            }
-        }
-    }
-    
-    func observeLightState() {
-        // Firebase의 Realtime DB 내용을 화면에 반영한다
-        // observe를 통해 이 화면이 존재하는 동안
-        // 계속 실시간 반영을 일으킨다
-        databaseRef.child("TodoList").observe(.value) { snapshot in
-            if let value = snapshot.value as? String {
-                todoList = value
+                todoStores.fetchData()
             }
         }
     }
 }
 
+//    func observeLightState() {
+//        // Firebase의 Realtime DB 내용을 화면에 반영한다
+//        // observe를 통해 이 화면이 존재하는 동안
+//        // 계속 실시간 반영을 일으킨다
+//        databaseRef.child("TodoList").observe(.value) { snapshot in
+//            if let value = snapshot.value as? String {
+//                todoList = value
+//            }
+//        }
+//    }
+
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
-            .environmentObject(ToDoStore())
-        
+        NavigationStack {
+            HomeView()
+        }
     }
 }

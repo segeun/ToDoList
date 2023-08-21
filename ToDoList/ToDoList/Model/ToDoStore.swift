@@ -6,16 +6,15 @@
 //
 
 import Foundation
-import Firebase
 import FirebaseFirestore
 
 
 class ToDoStore: ObservableObject {
     @Published var todoArray: [ToDo] = []
-    @Published var showAlert = false
+//    @Published var showAlert = false
 
-    let databaseRef = Database.database().reference().child("TodoList")
-    
+    let dbRef = Firestore.firestore().collection("TodoList")
+
 //    init() {
 //        toDoStore = [
 //            ToDo(work: "운동하기", date: Date()),
@@ -25,14 +24,11 @@ class ToDoStore: ObservableObject {
 //        ]
 //    }
     func fetchData() {
-        
-        
-        
-        todoArray = []
-        
-        
+ 
         // databaseRef.getDocuments 고려
-        Firestore.firestore().collection("TodoList").getDocuments { (snapshot, error) in
+        dbRef.getDocuments { (snapshot, error) in
+            self.todoArray.removeAll()
+            
             if let snapshot {
                 
                 var tempTodoStore: [ToDo] = []
@@ -50,40 +46,45 @@ class ToDoStore: ObservableObject {
                 }
                 
                 self.todoArray = tempTodoStore
-                self.sortTodoArray()
+//                self.sortTodoArray()
             }
         }
     }
     
     
     
-    func add(work: String) {
-        let newTodo = ToDo(work: work)
+    func add(_ todo: ToDo) {
+//        let newTodo = ToDo(work: work)
         
-        Firestore.firestore().collection("TodoList")
-            .document(newTodo.id) // 기존에 해당 id의 문서가 있으면 업데이트, 없으면 신규로 추가함
-            .setData(["work": newTodo.work,
-                      "date": newTodo.date
-                     ])
-        
-        
-        todoArray.append(newTodo)
-        sortTodoArray()
+//        Firestore.firestore().collection("TodoList")
+//            .document(newTodo.id) // 기존에 해당 id의 문서가 있으면 업데이트, 없으면 신규로 추가함
+//        todoArray.append(newTodo)
 //        newWorkText = ""
 //        dueDate = Date()
+        
+        dbRef.document(todo.id)
+            .setData(["work": todo.work,
+                      "date": todo.date
+                     ])
+        
+        fetchData()
+//        sortTodoArray()
     }
     
     func removeWork(at offsets: IndexSet) {
         
         for offset in offsets {
             let todo = todoArray[offset]
-            
+
             Firestore.firestore().collection("TodoList")
                 .document(todo.id)
                 .delete()
         }
 
         todoArray.remove(atOffsets: offsets)
+//        dbRef.document(todo.id).delete()
+        
+        fetchData()
         sortTodoArray()
     }
     
@@ -93,4 +94,12 @@ class ToDoStore: ObservableObject {
             $0.date > $1.date
         }
     }
+    
+    // 프리뷰를 위한 코드
+    
+    var sampleTodo: ToDo {
+        ToDo(work: "Hard Coding", date: Date().timeIntervalSince1970)
+    }
+    
+    
 }
