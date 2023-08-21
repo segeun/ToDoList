@@ -9,10 +9,16 @@ import SwiftUI
 
 struct PlusToDoView: View {
     
-    @EnvironmentObject var todoStores: ToDoStore
+    var todoStores: ToDoStore 
     @Binding var isShowingSheet: Bool
-    @State var newWorkText: String = ""
-    @State var dueDate: Date = Date()
+    @State private var newWorkText: String = ""
+    @State private var dueDate: Date = Date()
+    @State private var showAlert = false
+    
+    var trimMemo: String {
+        newWorkText.trimmingCharacters(in: .whitespaces)
+    }
+    
     
     var body: some View {
         NavigationStack {
@@ -34,9 +40,10 @@ struct PlusToDoView: View {
                     //  odoStores.showAlert = true -> guard문 사용했을 때
                     
                     if newWorkText.count == 0 {
-                        todoStores.showAlert = true
+                        showAlert = true
                     } else {
-                        todoStores.add(work: newWorkText, date: dueDate)
+                        let todo = ToDo(work: trimMemo)
+                        todoStores.add(todo)
                         isShowingSheet.toggle()
                     }
                     
@@ -56,7 +63,7 @@ struct PlusToDoView: View {
                     
                 }
             }
-            .alert(isPresented: $todoStores.showAlert) {
+            .alert(isPresented: $showAlert) {
                 Alert(title: Text("경고"), message: Text("내용을 채우세요!"))
             }
         }
@@ -64,8 +71,10 @@ struct PlusToDoView: View {
 }
 
 struct PlusToDoView_Previews: PreviewProvider {
+    
+//    @State static var todo = ToDoStore().sampleTodo
+    
     static var previews: some View {
-        PlusToDoView(isShowingSheet: .constant(true))
-            .environmentObject(ToDoStore())
+        PlusToDoView(todoStores: ToDoStore(), isShowingSheet: .constant(true))
     }
 }

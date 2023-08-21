@@ -8,17 +8,25 @@
 import Foundation
 
 struct ToDo: Identifiable {
-    var id: UUID = UUID()
+    var id: String = UUID().uuidString
     var work: String
-    var date: Date
-    
+    var date: Double = Date().timeIntervalSince1970
+    // var date: Double 로도 가능?
     
     var dateString: String {
         
-        let dateFormatter: DateFormatter = DateFormatter()
+        let dateCreatedAt = Date(timeIntervalSince1970: date)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_kr")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         dateFormatter.dateFormat = "yyyy-MM-dd EEE h:mm a"
         
-        return dateFormatter.string(from: date)
+        return dateFormatter.string(from: dateCreatedAt)
+    }
+    
+    var textForSharing: String {
+        return "\(work)\n\(date)"
     }
 }
 
