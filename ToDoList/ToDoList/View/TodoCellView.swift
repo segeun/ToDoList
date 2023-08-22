@@ -14,12 +14,13 @@ struct TodoCellView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(todo.work)
-            Text(todo.dateString)
+                .font(.system(size: 30).bold())
+            HStack {
+                Text(todo.dateString)
+                    .font(.headline)
+                    .foregroundColor(.gray)
+            }
         }
-        .font(.title2)
-        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 150))
-        .background(Color.green)
-        .shadow(radius: 8)
     }
 }
 
@@ -30,10 +31,10 @@ struct TodoCellView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             TodoCellView(todo: todo)
-                .previewDevice(PreviewDevice(rawValue: "iPhone 14 Plus"))
+                .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
             
             TodoCellView(todo: todo)
-                .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+                .previewDevice(PreviewDevice(rawValue: "iPhone 14 Plus"))
             
         }
         .previewLayout(.fixed(width: 400, height: 200))
