@@ -63,6 +63,9 @@ struct HomeView: View {
                 PlusToDoView(todoStores: todoStores, isShowingSheet: $isShowingSheet)
             }
             .navigationTitle("To Do List")
+            .refreshable {
+                todoStores.fetchData()
+            }
             .onAppear {
                 todoStores.fetchData()
             }

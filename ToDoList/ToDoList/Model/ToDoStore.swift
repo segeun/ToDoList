@@ -15,19 +15,19 @@ class ToDoStore: ObservableObject {
 
     let dbRef = Firestore.firestore().collection("TodoList")
 
-//    init() {
-//        toDoStore = [
-//            ToDo(work: "운동하기", date: Date()),
-//            ToDo(work: "줌켜기", date: Date()),
-//            ToDo(work: "1커밋하기", date: Date()),
-//
-//        ]
-//    }
+    init() {
+        
+    }
+    
     func fetchData() {
  
         // databaseRef.getDocuments 고려
         dbRef.getDocuments { (snapshot, error) in
-            self.todoArray.removeAll()
+            if let error = error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    self.todoArray.removeAll()
+                }
             
             if let snapshot {
                 
@@ -38,7 +38,9 @@ class ToDoStore: ObservableObject {
                     
                     let docData: [String: Any] = document.data()
                     let work: String = docData["work"] as? String ?? "(no work)"
-                    let date: Double = docData["date"] as? Double ?? 0
+                    let timestamp: Timestamp = docData["date"] as? Timestamp ?? Timestamp()
+                    let date: Date = timestamp.dateValue()
+
                     
                     let todo: ToDo = ToDo(id: id, work: work, date: date)
                     
@@ -97,9 +99,8 @@ class ToDoStore: ObservableObject {
     
     // 프리뷰를 위한 코드
     
-    var sampleTodo: ToDo {
-        ToDo(work: "Hard Coding", date: Date().timeIntervalSince1970)
-    }
+    var sampleTodo = ToDo(work: "Hard Coding", date: Date())
+
     
     
 }
